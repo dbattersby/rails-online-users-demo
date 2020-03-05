@@ -1,0 +1,55 @@
+<p class="float-right">
+  <span class="badge badge-success mr-4"><%= @online_users.size %> users online</span>
+  <% if user_signed_in? %>
+    <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+  <% else %>
+    <%= link_to "Sign In", new_user_session_path %> |
+    <%= link_to "Sign up", new_user_registration_path %>
+  <% end %>
+</p>
+
+<h3 class="mb-5">Dashboard</h3>
+
+<div class="row">
+  <div class="col-8">
+    <h5>All users</h5>
+
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Last Seen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.email %></td>
+            <td><%= user.last_seen_at.nil? ? "Never signed in" : time_ago_in_words(user.last_seen_at) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-4">
+    <h5>Online users</h5>
+
+    <table class="table mt-4">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @online_users.each do |user| %>
+          <tr>
+            <td><%= user.email %></td>
+            <td><span class="badge badge-success">Online</span></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
